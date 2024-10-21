@@ -219,8 +219,46 @@
     <script>
         window['refresh'] = '1729528451797';
 
+
         FLOWPAPER.onReady(function() {
-            // viewer start
+            var flipjsBookBlock = document.getElementById('flipjs-bookblock');
+            if (flipjsBookBlock) {
+                var reflow = window.reflow = new FlowPaperReflow({
+                    NumberOfSections    : 0,
+                    SplitRange          : [1],
+                    Indexes             : [],
+                    TotalPages          : 5,
+                    PageLabels          : [],
+                    DataFormat          : 'lz',
+                    Fonts               : {"g_font_5":{"name":"g_font_5","ascent":0.71,"descent":-0.01,"height":21,"fallback":"sans-serif"}},
+                    SidebarOpen         : false,
+                    ReflowWithSidebar   : false,
+                    AnimationStyle      : 'Flip',
+                    AddPageShadows      : true,
+                    DisableSharingURL   : false,
+                    RoundedCorners      : true,
+                    Animate             : true,
+                    SingleFirstPage     : true,
+                    LayoutMode          : 'Adaptive',
+                    BackgroundColor     : '#cccccc',
+                    AddDropShadow       : true,
+                    BrandingLogo        : '',
+                    Locale              : {
+                        'search_document' : 'Search in this document!'
+                    }
+                });
+
+                flipjsBookBlock.addEventListener("onCurrentPageChanged", function(ev) {
+                    var txtPageNumber = document.getElementById('txtPageNumber');
+                    if (txtPageNumber) {
+                        txtPageNumber.value = ev.detail.pageLabel ? ev.detail.pageLabel : ev.detail.page;
+                    }
+                });
+            } else {
+                console.error('Element flipjs-bookblock not found');
+            }
+        });
+                    // viewer start
             var reflow = window.reflow = new FlowPaperReflow({
                 NumberOfSections    : 0,
                 SplitRange          : [1],
